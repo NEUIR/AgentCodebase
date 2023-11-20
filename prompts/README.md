@@ -1,0 +1,1 @@
+# Some useful tips for designing prompts
