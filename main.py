@@ -3,6 +3,8 @@
 # desc: The main function of the project
 
 import argparse
+from agents.gpt.gpt_wrapper import GPTAgent
+
 
 def load_generator(model_type):
     if model_type in ["gpt-4", "gpt-3.5-turbo",]:
