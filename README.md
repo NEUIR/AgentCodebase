@@ -2,8 +2,25 @@
 Inference code for different agents.
 
 
-## OpenAI
+
+
+
+
+
+## GPT 
+
+
+
+
 
 
 
 ## Llama
+
+
+
+
+
+
+
+## Baichuan

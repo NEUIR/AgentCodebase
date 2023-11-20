@@ -4,24 +4,29 @@
 
 import argparse
 from agents.gpt.gpt_wrapper import GPTAgent
+from agents.llama.llama_wrapper import LLamaAgent
+GPT_FAMILY=[
+    ""
+]
+
+LLAMA_FAMILY=[
+    ""
+]
+
 
 
 def load_generator(model_type):
-    if model_type in ["gpt-4", "gpt-3.5-turbo",]:
-        generator = API_Caller(model_type)
+    """
+    :param model_type: The model to use for completion.
+    :return: Return the generator.
+    """
+    if model_type in GPT_FAMILY:
+        generator = GPTAgent(model_type)
+    elif model_type in LLAMA_FAMILY:
+        generator = LLamaAgent(model_type)
     else:
-        ckpt = model_path[model_type]
+        pass
 
-        if model_type == "starchat":
-            generator = pipeline("text-generation", model=ckpt, tokenizer=ckpt, torch_dtype=torch.bfloat16, device_map="auto")
-        else: # llama-series
-            if model_type in ["mpt-30b-chat", "falcon-40b-instruct"]:
-                generator = pipeline(model=ckpt, tokenizer=ckpt, device_map="auto", trust_remote_code=True)
-            else:
-                model = LlamaForCausalLM.from_pretrained(ckpt, device_map="auto")
-                tokenizer = LlamaTokenizer.from_pretrained(ckpt)
-                generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
-    print("model loaded")
     return generator
 
 
@@ -30,7 +35,7 @@ def main():
     parser.add_argument("--model_type", type=str, default="gpt-3.5-turbo-0613")
     args = parser.parse_args()
 
-    generator = load_generator(model_type)
+    generator = load_generator(args.model_type)
 
 
 if __name__ == '__main__':
