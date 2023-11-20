@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="wanghanbin@202.199.13.24:22 password (21)" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="wanghanbin@202.199.13.24:22 password">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/data1/wanghanbin/NEUIR/AgentCodebase" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -65,10 +65,38 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="wanghanbin@202.199.13.24:22 password (18)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wanghanbin@202.199.13.24:22 password (19)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="wanghanbin@202.199.13.24:22 password (2)">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wanghanbin@202.199.13.24:22 password (20)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wanghanbin@202.199.13.24:22 password (21)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/data1/wanghanbin/NEUIR/AgentCodebase" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
@@ -129,5 +157,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

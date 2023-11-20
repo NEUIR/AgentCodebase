@@ -4,7 +4,7 @@ import os
 
 
 # openai.api_key = "PUT YOUR KEY HERE"
-openai.api_key = "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"
+openai.api_key = "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"
 
 class GPTAgent():
     def __init__(self, model):

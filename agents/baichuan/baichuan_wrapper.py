@@ -13,24 +13,19 @@ class KeywordsStoppingCriteria(StoppingCriteria):
         return False
 
 
-class LLamaAgent():
+class BaichuanAgent():
     def __init__(self, model_path):
         """
         :param model: The model to use for completion.
         """
         self.model_path = model_path
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_path, device_map="auto")
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
-        self.generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer)
+        self.model = AutoModelForCausalLM.from_pretrained(self.model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path,use_fast=False, trust_remote_code=True)
 
 
 
-    def __call__(self,prompt,stop_words,max_new_tokens=128,temperature=0.2):
+    def __call__(self,messages,stop_words,max_new_tokens=128,temperature=0.2):
         stop_token_ids=[self.tokenizer.encode(stop_word)[-1] for stop_word in stop_words]
-        # print("stop_token_ids:",stop_token_ids)
-        # conover ids to tokens
-        # stop_tokens = [self.generator.tokenizer.convert_ids_to_tokens(stop_token_id) for stop_token_id in stop_token_ids]
-        # print("stop tokens:",stop_tokens)
         stopping_criteria = StoppingCriteriaList([KeywordsStoppingCriteria(stop_token_ids)])
 
         eos_token_id = self.tokenizer.eos_token_id
@@ -42,27 +37,33 @@ class LLamaAgent():
             temperature=0.2
         )
 
-        input_ids = self.tokenizer(prompt, return_tensors="pt")["input_ids"]
-        input_ids = input_ids.to('cuda')
-        generated_ids = self.model.generate(input_ids,
-                                            generation_config=generation_config,
-                                            stopping_criteria=stopping_criteria)
-        response = self.tokenizer.batch_decode(generated_ids[:, input_ids.shape[1]:-1], skip_special_tokens=True)[0]
+        # instruct model
+        # input_ids = self.tokenizer(prompt, return_tensors="pt")["input_ids"]
+        # input_ids = input_ids.to('cuda')
+        # generated_ids = self.model.generate(input_ids,
+        #                                     generation_config=generation_config,
+        #                                     stopping_criteria=stopping_criteria)
+        # response = self.tokenizer.batch_decode(generated_ids[:, input_ids.shape[1]:-1], skip_special_tokens=True)[0]
 
+
+        # chat model
+        response = self.model.chat(self.tokenizer, messages, generation_config=generation_config)
         return response
 
 
 if __name__ == '__main__':
-    model_path = "/data4/codellama/CodeLlama-13b-Instruct-hf/"
-    generator = LLamaAgent(model_path)
+    model_path = "/data4/Baichuan2/Baichuan2-13B-Chat/"
+    generator = BaichuanAgent(model_path)
 
-    prompt = "def sum(a,b) -> float:\n"
+    messages = []
+    messages.append({"role": "user", "content": "解释一下“温故而知新”"})
     stop_words = ["\ndef"]
     max_new_tokens = 128
     temperature = 0.2
-    print("    User Prompt:\n", prompt)
 
-    response = generator(prompt,stop_words,max_new_tokens,temperature)
+    print("    User Prompt:\n", messages)
+
+    response = generator(messages,stop_words,max_new_tokens,temperature)
 
     print("    Response:\n", response)
 
